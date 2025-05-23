@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +50,6 @@
             background-color: black;
             color: red;
             font-family: Arial, sans-serif;
-            font-size: 5rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,6 +71,21 @@
             border-radius: 10px;
             box-shadow: 0 0 20px red;
             background-color: rgba(0, 0, 0, 0.8);
+            font-size: 5rem;
+            text-align: center;
+        }
+        /* Responsive font size for the clock */
+        @media (max-width: 768px) {
+            #clock {
+                font-size: 3rem;
+                padding: 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            #clock {
+                font-size: 2rem;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -49,25 +102,32 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
-        
+
         const canvas = document.getElementById("matrixCanvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+
+        // Initialize drops array early to avoid TDZ error
+        let drops = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops = Array(Math.floor(canvas.width / 20)).fill(0); // Reinitialize drops with correct size
+        }
+        resizeCanvas();
+
         const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        const columns = Math.floor(canvas.width / 20);
-        const drops = Array(columns).fill(0);
-        
+
         function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "limegreen";
             ctx.font = "20px monospace";
-            
+
             for (let i = 0; i < drops.length; i++) {
                 const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
                 ctx.fillText(text, i * 20, drops[i] * 20);
-                
+
                 if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -75,6 +135,10 @@
             }
         }
         setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
     </script>
 </body>
 </html>
