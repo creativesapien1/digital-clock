@@ -42,150 +42,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishal .R. Gaud</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <title>Live Digital Clock - Matrix Style</title>
     <style>
         body {
-            font-family: 'Orbitron', 'Times New Roman', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e0e0e0;
-            overflow-x: hidden;
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: red;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
         }
-        .neon-text {
-            text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        .neon-border {
-            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00f0ff;
+        #clock {
+            position: relative;
+            z-index: 1;
+            border: 5px solid red;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px red;
+            background-color: rgba(0, 0, 0, 0.8);
+            font-size: 5rem;
+            text-align: center;
         }
-        .typing::after {
-            content: '|';
-            animation: blink 1s infinite;
+        /* Responsive font size for the clock */
+        @media (max-width: 768px) {
+            #clock {
+                font-size: 3rem;
+                padding: 15px;
+            }
         }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
+        @media (max-width: 480px) {
+            #clock {
+                font-size: 2rem;
+                padding: 10px;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-gray-900 bg-opacity-80 backdrop-blur-sm p-4 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold neon-text">Vishal .R. Gaud</a>
-            <div class="space-x-6">
-                <a href="#about" class="hover:text-pink-500 transition-colors">About</a>
-                <a href="#portfolio" class="hover:text-cyan-400 transition-colors">Portfolio</a>
-                <a href="#contact" class="hover:text-purple-400 transition-colors">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/4725853/pexels-photo-4725853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')">
-        <div class="text-center">
-            <h1 class="text-5xl md:text-7xl font-bold neon-text mb-4">Hi, I'm Vishal .R. Gaud</h1>
-            <p id="typing-text" class="text-xl md:text-2xl text-cyan-300 typing">Creative Developer & Dreamer</p>
-            <a href="#contact" class="mt-6 inline-block bg-pink-600 text-white py-2 px-6 rounded-lg neon-border hover-scale">Get in Touch</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold neon-text text-center mb-8">About Me</h2>
-            <div class="max-w-2xl mx-auto text-center">
-                <p class="text-lg mb-4">I'm a passionate developer with a love for creating visually stunning and innovative projects. Inspired by cyberpunk aesthetics and anime, I blend creativity with technology to build unique digital experiences.</p>
-                <p class="text-lg mb-4">When I'm not coding, you can find me exploring new design trends, watching Studio Ghibli films, or dreaming up the next big idea.</p>
-                <h3 class="text-2xl font-bold text-cyan-400 mb-4">Connect With Me</h3>
-                <p class="text-lg">Feel free to reach out with questions about my projects, ideas for collaborations, or to chat about tech, anime, or cyberpunk culture! Please keep inquiries professional or related to creative interests, and avoid sharing sensitive personal details like addresses or financial information.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-16 bg-gray-800 bg-opacity-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold neon-text text-center mb-8">Portfolio</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-gray-900 p-6 rounded-lg neon-border hover-scale">
-                    <img src="https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Futuristic digital interface with green holographic displays" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-bold text-pink-400">Digital Clock</h3>
-                    <p>A Matrix-inspired digital clock built with HTML, CSS, and JavaScript, featuring a neon red display and a dynamic lime-green Matrix rain effect.</p>
-                    <a href="https://creativesapien1.github.io/digital-clock/" class="mt-4 inline-block bg-cyan-600 text-white py-2 px-4 rounded-lg neon-border hover-scale">View Project</a>
-                </div>
-                <div class="bg-gray-900 p-6 rounded-lg neon-border hover-scale">
-                    <img src="https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Neon-lit cyberpunk cityscape" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-bold text-cyan-400">Cyberpunk Quote Generator</h3>
-                    <p>A cyberpunk-themed quote generator with neon aesthetics, built using HTML, CSS, and JavaScript.</p>
-                    <a href="https://creativesapien1.github.io/cyberpunk-quote-generator/" class="mt-4 inline-block bg-cyan-600 text-white py-2 px-4 rounded-lg neon-border hover-scale">View Project</a>
-                </div>
-                <div class="bg-gray-900 p-6 rounded-lg neon-border hover-scale">
-                    <img src="https://images.pexels.com/photos/186076/pexels-photo-186076.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Anime-style cyberpunk cityscape" class="w-full h-48 object-cover rounded mb-4">
-                    <h3 class="text-xl font-bold text-purple-400">Anime To-Do List</h3>
-                    <p>A cyberpunk-anime styled to-do list with task management, built using HTML, CSS, and JavaScript.</p>
-                    <a href="https://creativesapien1.github.io/anime-todo-list/" class="mt-4 inline-block bg-cyan-600 text-white py-2 px-4 rounded-lg neon-border hover-scale">View Project</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold neon-text text-center mb-8">Contact Me</h2>
-            <div class="max-w-lg mx-auto">
-                <form action="https://formspree.io/f/gaudvishal454@gmail.com" method="POST" class="space-y-4">
-                    <input type="hidden" name="_next" value="#contact">
-                    <input type="text" name="name" placeholder="Your Name" required class="w-full p-3 bg-gray-900 border border-pink-500 rounded neon-border focus:outline-none focus:border-cyan-400">
-                    <input type="email" name="email" placeholder="Your Email" required class="w-full p-3 bg-gray-900 border border-pink-500 rounded neon-border focus:outline-none focus:border-cyan-400">
-                    <textarea name="message" placeholder="Your Message" required class="w-full p-3 bg-gray-900 border border-pink-500 rounded neon-border focus:outline-none focus:border-cyan-400 h-32"></textarea>
-                    <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg neon-border hover-scale">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-6 text-center">
-        <p>© 2025 Vishal .R. Gaud. All rights reserved.</p>
-    </footer>
-
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <div id="clock"></div>
     <script>
-        // Typing effect for hero section
-        const texts = ['Creative Developer & Dreamer', 'Anime Enthusiast', 'Cyberpunk Visionary'];
-        let index = 0;
-        let charIndex = 0;
-        let currentText = '';
-        const typingElement = document.getElementById('typing-text');
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        function type() {
-            if (charIndex < texts[index].length) {
-                currentText += texts[index].charAt(charIndex);
-                typingElement.textContent = currentText;
-                charIndex++;
-                setTimeout(type, 100);
-            } else {
-                setTimeout(erase, 2000);
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Initialize drops array early to avoid TDZ error
+        let drops = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops = Array(Math.floor(canvas.width / 20)).fill(0); // Reinitialize drops with correct size
+        }
+        resizeCanvas();
+
+        const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "limegreen";
+            ctx.font = "20px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
             }
         }
+        setInterval(drawMatrix, 50);
 
-        function erase() {
-            if (charIndex > 0) {
-                currentText = currentText.slice(0, -1);
-                typingElement.textContent = currentText;
-                charIndex--;
-                setTimeout(erase, 50);
-            } else {
-                index = (index + 1) % texts.length;
-                setTimeout(type, 500);
-            }
-        }
-
-        type();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
     </script>
 </body>
 </html>
